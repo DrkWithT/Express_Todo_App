@@ -3,7 +3,9 @@
  * @author Derek Tan
  */
 
-import express from 'express';
+var express = require('express');
+const { closeDBConnection } = require('./database');
+const mydatabase = require('./database');
 
 const PORT = 8080;
 
@@ -14,11 +16,32 @@ app.set('view engine', 'pug');
 
 /* Middleware */
 app.get('/', (req, res) => {
-    res.render('landing', {page_title: 'Landing', result_title:'N/A', result_text: 'N/A'});
+    res.render('landing', {page_title: 'Todos', result_title:'N/A', result_text: 'N/A'});
 });
 
 app.post('/', (req, res) => {
-    res.render('landing', {page_title: 'Landing', result_title:'N/A', result_text: 'N/A'});
+    let appAction = req.body.action || 0;
+    let todoTitle = req.body.title || 'foo';
+    let todoDescription = req.body.description;
+
+    switch (appAction) {
+        case 1: // fetch a todo task here...
+            mydatabase.fetchTodoTask({title: todoTitle}, (err, data = null) => {
+                if (err) {
+                    res.render('landing', {page_title: 'Todos', result_title: 'Error', result_text: 'Failed to fetch data.'});
+                } else if (data !== null) {
+                    res.render('landing', {page_title: 'Todos', result_title: data.title, result_text: data.description});
+                } else {
+                    res.render('landing', {page_title: 'Todos', result_title: 'Error', result_text: 'No data found.'});
+                }
+            });
+            break;
+        case 2: // TODO: add an insertion action of a todo task.
+        case 3: // TODO: add a deletion action of a todo task.
+        default:
+            res.render('landing', {page_title: 'Todos', result_title:'Error', result_text: 'Unsupported action.'});
+            break;
+    }
 });
 
 app.get('/info', (req, res) => {
@@ -30,10 +53,14 @@ app.get('/*', (req, res) => {
 });
 
 const AppServer = app.listen(PORT, () => {
+    mydatabase.setupDBConnection();
     console.log(`Started server at port ${PORT}`);
 });
 
 /* Exit Handlers */
-process.on('SIGINT', (signal) => {
-    AppServer.close(() => console.log('Closed server.'));
+process.on('SIGINT', () => {
+    AppServer.close(() => {
+        closeDBConnection();
+        console.log('Closing app server.');
+    });
 });

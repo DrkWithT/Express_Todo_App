@@ -66,6 +66,10 @@ section {
     padding: 8px;
 }
 
+h4 {
+    text-align: center;
+}
+
 form {
     display: block;
     margin: 0;
@@ -103,14 +107,20 @@ input:focus, textarea:focus {
 
 /* Other Content */
 div#task-box {
+    position: relative;
     display: block;
     margin: 8px;
     padding: 4px;
-    border: 2px solid gray;
+    border: 2px solid #323232;
     background-color: #b6846b;
     color: white;
+    text-align: center;
+    box-shadow: 8px 8px 6px gray;
+}
+
+div#task-box:hover {
     animation-name: littlebob;
-    animation-duration: 0.5s;
+    animation-duration: 1.0s;
     animation-timing-function: ease-in-out;
 }
 

@@ -1,0 +1,95 @@
+/*
+    index.css
+    Common styles for pages.
+    Derek Tan
+*/
+
+/* Body */
+body {
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: whitesmoke;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Header Content */
+header {
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 4px;
+    background-color: #000010;
+    color: whitesmoke;
+}
+
+div#titling, nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 4px;
+}
+
+a.nav-link {
+    display: block;
+    padding: 8px;
+    background-color: transparent;
+    color: inherit;
+    transition-property: background-color;
+    transition-duration: 0.25s;
+    text-decoration: none;
+}
+
+a.nav-link:hover {
+    background-color: #3c3c3c;
+    color: #f73149;
+}
+
+/* Main Content */
+main {
+    display: block;
+    margin: 0;
+    padding: 0 calc(64px + 10%);
+}
+
+section {
+    display: block;
+    margin-bottom: 8px;
+    padding: 8px;
+}
+
+form {
+    display: block;
+    margin: 0;
+    padding: 8px;
+    border: 2px dotted lightgray;
+}
+
+form > input {
+    display: block;
+    margin: 8px;
+    padding: 4px;
+    border: 2px solid #323232;
+    background-color: white;
+    color: black;
+}
+
+form > input:invalid {
+    background-color: #ffefef;
+    color: #f73149;
+}
+
+input:focus {
+    outline: none;
+}
+
+/* Other Content */
+

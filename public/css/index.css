@@ -105,6 +105,20 @@ input:focus, textarea:focus {
     outline: none;
 }
 
+input#submitter {
+    display: block;
+    margin: 0;
+    padding: 8px;
+    background-color: #e34154;
+    color: white;
+    border: none;
+}
+
+input#submitter:hover {
+    background-color: #fe7884;
+    color: whitesmoke;
+}
+
 /* Other Content */
 div#task-box {
     position: relative;

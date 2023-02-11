@@ -2,7 +2,7 @@
   "name": "express_todo_app",
   "version": "1.0.0",
   "description": "### Summary: This repository contains code and other files for a to-do web application. I made this project to review and apply my JavaScript and SQL knowledge.",
-  "type": "module",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,9 @@
   "author": "Derek Tan",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "mysql": "^2.18.1",
     "pug": "^3.0.2"
   }
 }

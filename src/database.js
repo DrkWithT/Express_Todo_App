@@ -32,7 +32,9 @@ function setupDBConnection() {
 }
 
 function fetchTodoTask(data, callback) {
-    databaseCon.query('SELECT title, description FROM tasks WHERE title = ?', data.title, (err, rows) => {
+    let cleanedTitle = mysql.escape(data.title); // sanitize this user given value for security purposes!
+
+    databaseCon.query('SELECT title, description FROM tasks WHERE title = ?', cleanedTitle, (err, rows) => {
         if (err) {
             callback(err, null);
         } else {

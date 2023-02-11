@@ -1,0 +1,6 @@
+# gitignore
+# By: Derek Tan
+
+# Ignore NodeJS files
+node_modules/
+package-lock.json

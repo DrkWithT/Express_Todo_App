@@ -4,14 +4,14 @@
  */
 
 var express = require('express');
-const { closeDBConnection } = require('./database');
 const mydatabase = require('./database');
 
-const PORT = 8080;
+const PORT = 3000;
 
 /* App Setup */
 const app = express();
 app.use(express.static('public'));
+app.use(express.urlencoded({extended: false}));
 app.set('view engine', 'pug');
 
 /* Middleware */
@@ -20,17 +20,21 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    let appAction = req.body.action || 0;
+    let appAction = parseInt(req.body.action) || 0;
     let todoTitle = req.body.title || 'foo';
     let todoDescription = req.body.description;
 
+    let realTitle = todoTitle.trim().split(' ').join('_'); // format title string with snake case
+
     switch (appAction) {
         case 1: // fetch a todo task here...
-            mydatabase.fetchTodoTask({title: todoTitle}, (err, data = null) => {
+            mydatabase.fetchTodoTask({title: realTitle}, (err, data = null) => {
                 if (err) {
+                    console.error(`SQL Error: ${err.message}`);
+
                     res.render('landing', {page_title: 'Todos', result_title: 'Error', result_text: 'Failed to fetch data.'});
-                } else if (data !== null) {
-                    res.render('landing', {page_title: 'Todos', result_title: data.title, result_text: data.description});
+                } else if (data) {
+                    res.render('landing', {page_title: 'Todos', result_title: data.title.replace('_', ' '), result_text: data.description});
                 } else {
                     res.render('landing', {page_title: 'Todos', result_title: 'Error', result_text: 'No data found.'});
                 }
@@ -59,8 +63,5 @@ const AppServer = app.listen(PORT, () => {
 
 /* Exit Handlers */
 process.on('SIGINT', () => {
-    AppServer.close(() => {
-        closeDBConnection();
-        console.log('Closing app server.');
-    });
+    AppServer.close(() => mydatabase.closeDBConnection());
 });

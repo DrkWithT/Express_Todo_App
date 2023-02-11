@@ -13,14 +13,12 @@ var databaseCon = mysql.createConnection({
     database: `${process.env.DB_NAME}`
 });
 
-var databaseReady = false;
-
 /**
  * @description Connects to a remote mySQL database. Should be called once!
  */
 function setupDBConnection() {
     databaseCon.connect((err) => {
-        databaseReady = !err;
+        let databaseReady = !err;
 
         if (!databaseReady) {
             console.error(`${err.message}`);
@@ -34,7 +32,7 @@ function setupDBConnection() {
 function fetchTodoTask(data, callback) {
     let cleanedTitle = mysql.escape(data.title); // sanitize this user given value for security purposes!
 
-    databaseCon.query('SELECT title, description FROM tasks WHERE title = ?', cleanedTitle, (err, rows) => {
+    databaseCon.query(`SELECT title, description FROM tasks WHERE title = ${cleanedTitle}`, (err, rows) => {
         if (err) {
             callback(err, null);
         } else {
@@ -44,13 +42,8 @@ function fetchTodoTask(data, callback) {
 }
 
 function closeDBConnection() {
-    databaseCon.end((err) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Closed DB connection.');
-        }
-    });
+    console.log('About to close DB connection.');
+    databaseCon.destroy();
 }
 
 /// Exports of database.js:

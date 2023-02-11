@@ -21,8 +21,12 @@ app.post('/', (req, res) => {
     res.render('landing', {page_title: 'Landing', result_title:'N/A', result_text: 'N/A'});
 });
 
+app.get('/info', (req, res) => {
+    res.render('info', {page_title: 'Info'});
+});
+
 app.get('/*', (req, res) => {
-    res.send('Unknown page.')
+    res.status(404).send('Unknown page.');
 });
 
 const AppServer = app.listen(PORT, () => {

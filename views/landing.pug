@@ -4,8 +4,8 @@ block stylesheets
     link(rel="stylesheet", href="css/index.css")
 
 block links
-    //- TODO!
-    a.nav-link(href="#") Help
+    //- Navigation links
+    a.nav-link(href="/info") Information
 
 block main_content
     main
@@ -23,6 +23,7 @@ block main_content
                 textarea#description-input(name="description" type="text" maxlength="104")
         section
             h4 Query Result
+            //- For simplicity, only 1 message entry is shown at a time.
             div#task-box
                 h6 #{result_title}
                 p #{result_text}

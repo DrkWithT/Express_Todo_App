@@ -25,8 +25,8 @@ app.post('/', (req, res) => {
     let todoID = -1;
     let todoDescription = req.body.description;
 
-    if (!isNaN(req.body.title)) {
-        todoID = parseInt(req.body.title); // if a valid ID is passed instead of a title, use it for deletions only!
+    if (!isNaN(todoTitle)) {
+        todoID = parseInt(todoTitle); // if a valid ID is passed instead of a title, use it for deletions only!
     }
 
     let realTitle = todoTitle.trim().split(' ').join('_'); // format title string with snake case
@@ -52,7 +52,7 @@ app.post('/', (req, res) => {
 
                     res.render('landing', {page_title: 'Todos', result_title: 'Error', result_text: 'Failed to add the task.'});
                 } else if (data.ok) {
-                    res.render('landing', {page_title: 'Todos', result_title: data.title.replace('_', ' '), result_text: 'Added task.'});
+                    res.render('landing', {page_title: 'Todos', result_title: 'Success', result_text: 'Added task.'});
                 } else {
                     res.render('landing', {page_title: 'Todos', result_title: 'Error', result_text: 'Failed to add the task.'});
                 }
@@ -65,7 +65,7 @@ app.post('/', (req, res) => {
 
                     res.render('landing', {page_title: 'Todos', result_title: 'Error', result_text: 'Failed to delete new task.'});
                 } else if (data.ok) {
-                    res.render('landing', {page_title: 'Todos', result_title: data.title.replace('_', ' '), result_text: 'Deleted task.'});
+                    res.render('landing', {page_title: 'Todos', result_title: 'Success', result_text: 'Deleted task.'});
                 } else {
                     res.render('landing', {page_title: 'Todos', result_title: 'Error', result_text: 'Failed to delete new task.'});
                 }

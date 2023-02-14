@@ -11,6 +11,7 @@ block main_content
     main
         section
             h4 Managing Form
+            p See Information for more details.
             form(action="/", method="post")
                 //- Action: 1 is get, 2 is add, 3 is delete!
                 label.form-label(for="action") Action
@@ -26,5 +27,5 @@ block main_content
             h4 Query Result
             //- For simplicity, only 1 message entry is shown at a time.
             div#task-box
-                h6 #{result_title}
+                h5 #{result_title}
                 p #{result_text}

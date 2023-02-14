@@ -1,11 +1,14 @@
 /**
  * @file index.js
+ * @brief Contains the main logic of my Express application including middleware and exit listeners.
  * @author Derek Tan
  */
 
+/** CommonJS Imports */
 var express = require('express');
 const mydatabase = require('./database');
 
+/** Constants */
 const PORT = 3000;
 
 /* App Setup */
@@ -22,7 +25,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     let appAction = parseInt(req.body.action) || 0;
     let todoTitle = req.body.title || 'foo';
-    let todoID = -1;
+    let todoID;
     let todoDescription = req.body.description;
 
     if (!isNaN(todoTitle)) {

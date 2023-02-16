@@ -13,7 +13,9 @@ This repository contains code and other files for a to-do web application. I mad
 ### Usage:
  1. After downloading the repo, run `npm install` locally.
  2. After installing all packages, run `npm start` to run the application.
- 3. Open `localhost` at port 3000.
+ 3. Create a `.env` file to store database credentials (see the `database.js` file for specific `.env` varialbe names). Create an SQL database according to the specification in the database notes.
+ 4. Run the MySQL server.
+ 5. Open `localhost` at port 3000.
 
 ### Notes: (Front-End)
  - Use material design for UI appearance.
@@ -35,5 +37,6 @@ This repository contains code and other files for a to-do web application. I mad
  1. Create all basic webpages. (DONE)
  2. Fix CSS. (DONE)
  3. Install NodeJS mySQL module. (DONE)
- 4. Integrate and test JS to SQL code. (WIP)
-   - Finish the adding, deleting, and reading tasks functionality.
+ 4. Finish the adding, deleting, and reading tasks functionality. (DONE)
+ 5. Add a viewing page for _all_ entries!
+ 6. Test client side form script with ID entry or title entry.

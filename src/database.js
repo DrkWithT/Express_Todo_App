@@ -1,6 +1,7 @@
 /**
  * @file database.js
  * @author Derek Tan
+ * @todo Add a function to fetch all (title,id) query tuples. This will allow the user to know what they posted or what to delete.
  */
 
 var mysql = require('mysql');
@@ -29,6 +30,26 @@ function setupDBConnection() {
         }
 
         console.info('Connected to database.');
+    });
+}
+
+/**
+ * @description Runs a read SQL operation to fetch all posted tasks' titles with IDs.
+ * @param {*} callback The function invoked when the SQL operation ends.
+ */
+function fetchTaskBriefs(callback) {
+    if (!dbConUsable) {
+        callback(new Error('Database unavailable.'), null);
+        return;
+    }
+
+    // NOTE: the rows param in the callback is Array<object>...
+    databaseCon.query('SELECT taskid, title FROM tasks', (err, rows) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, {results: rows});
+        }
     });
 }
 
@@ -102,7 +123,7 @@ function deleteTodoTask(data, callback) {
     }
 
     switch (argChoice) {
-        case 1: // handle deletion by title        
+        case 1: // handle deletion by title
             databaseCon.query(`DELETE FROM tasks WHERE title = ${cleanedTitle}`, (err, result) => {
                 if (err) {
                     callback(err, null);
@@ -135,6 +156,7 @@ function closeDBConnection() {
 /// Exports of database.js:
 module.exports = {
     setupDBConnection: setupDBConnection,
+    fetchTaskBriefs: fetchTaskBriefs,
     fetchTodoTask: fetchTodoTask,
     insertTodoTask: insertTodoTask,
     deleteTodoTask: deleteTodoTask,

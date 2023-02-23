@@ -1,12 +1,11 @@
 /**
  * @file database.js
  * @author Derek Tan
- * @todo Add a function to fetch all (title,id) query tuples. This will allow the user to know what they posted or what to delete.
  */
 
 var mysql = require('mysql');
-require('dotenv').config(); // load my DB credentials from .env
-var validators = require('./validators'); // use my own validator functions
+require('dotenv').config(); // load DB credentials from envfile
+var validators = require('./validators'); // use simple validator functions
 
 var databaseCon = mysql.createConnection({
     host: `${process.env.DB_HOST}`,
@@ -153,7 +152,7 @@ function closeDBConnection() {
     databaseCon.destroy();
 }
 
-/// Exports of database.js:
+// Exports of database.js
 module.exports = {
     setupDBConnection: setupDBConnection,
     fetchTaskBriefs: fetchTaskBriefs,

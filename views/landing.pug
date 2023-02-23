@@ -4,7 +4,6 @@ block stylesheets
     link(rel="stylesheet", href="css/index.css")
 
 block links
-    //- Navigation links
     a.nav-link(href="/info") Information
     a.nav-link(href="#result-heading") Jump To Result
 
@@ -14,7 +13,7 @@ block main_content
             h4 Managing Form
             p See Information for more details.
             form(action="/", method="post")
-                //- Action: 1 is get, 2 is add, 3 is delete!
+                //- Action
                 label.form-label(for="action") Action
                 input#action-input(name="action" type="number" min="1" max="3" value="1" required)
                 //- Title: subject heading of todo entry.
@@ -28,11 +27,10 @@ block main_content
             h4#all-tasks-heading Your Tasks
             div#task-box
                 ul
-                    //- Dynamic list of brief task info below.
                     if tasks
                         if tasks.length > 0
                             each task in tasks
-                                li= task.taskid + ': ' + task.title
+                                li= task.taskid + ': ' + task.title.replace('_', ' ')
                         else
                             li No tasks found.
                     else

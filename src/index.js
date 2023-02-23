@@ -21,9 +21,9 @@ app.set('view engine', 'pug');
 app.get('/', (req, res) => {
     mydatabase.fetchTaskBriefs((err, data) => {
         if (data) {
-            res.render('landing', {page_title: 'Todos', tasks: data, result_title:'N/A', result_text: 'N/A'});
+            res.render('landing', {page_title: 'Todos', tasks: data, result_title: 'N/A', result_text: 'N/A'});
         } else {
-            res.render('landing', {page_title: 'Todos', tasks: [], result_title:'Error', result_text: `${err.message}`});
+            res.render('landing', {page_title: 'Todos', tasks: [], result_title: 'Error', result_text: `${err.message}`});
         }
     });
 });
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     let appAction = parseInt(req.body.action) || 0;
     let todoTitle = req.body.title || 'foo';
-    let todoID;
+    let todoID = 0;
     let todoDescription = req.body.description || 'No content';
 
     if (!isNaN(todoTitle)) {

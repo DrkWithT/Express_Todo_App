@@ -1,6 +1,7 @@
 /**
  * @file database.js
  * @author Derek Tan
+ * @todo Add a function to fetch all (title,id) query tuples. This will allow the user to know what they posted or what to delete.
  */
 
 var mysql = require('mysql');
@@ -14,14 +15,16 @@ var databaseCon = mysql.createConnection({
     database: `${process.env.DB_NAME}`
 });
 
+var dbConUsable = false;
+
 /**
  * @description Connects to a remote mySQL database. Should be called once!
  */
 function setupDBConnection() {
     databaseCon.connect((err) => {
-        let databaseReady = !err;
+        dbConUsable = !err;
 
-        if (!databaseReady) {
+        if (!dbConUsable) {
             console.error(`${err.message}`);
             return;
         }
@@ -31,11 +34,37 @@ function setupDBConnection() {
 }
 
 /**
+ * @description Runs a read SQL operation to fetch all posted tasks' titles with IDs.
+ * @param {*} callback The function invoked when the SQL operation ends.
+ */
+function fetchTaskBriefs(callback) {
+    if (!dbConUsable) {
+        callback(new Error('Database unavailable.'), null);
+        return;
+    }
+
+    // NOTE: the rows param in the callback is Array<object>...
+    databaseCon.query('SELECT taskid, title FROM tasks', (err, rows) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, rows);
+        }
+    });
+}
+
+/**
  * @description Runs a read operation of a task.
  * @param {object} data The form data object. Must be sanitized.
  * @param {Function} callback The function invoked when the SQL operation ends.
  */
 function fetchTodoTask(data, callback) {
+    // guard clause: check if database connection is usable
+    if (!dbConUsable) {
+        callback(new Error('Database unavailable.'), null);
+        return;
+    }
+
     let cleanedTitle = mysql.escape(data.title); // sanitize user given values for security purposes!
 
     databaseCon.query(`SELECT title, description FROM tasks WHERE title = ${cleanedTitle}`, (err, rows) => {
@@ -53,6 +82,11 @@ function fetchTodoTask(data, callback) {
  * @param {Function} callback The function to invoke on the SQL operation finish.
  */
 function insertTodoTask(data, callback) {
+    if (!dbConUsable) {
+        callback(new Error('Database unavailable.'), null);
+        return;
+    }
+
     let cleanedTitle = mysql.escape(data.title);
     let cleanedDesc = mysql.escape(data.description);
 
@@ -71,6 +105,11 @@ function insertTodoTask(data, callback) {
  * @param {Function} callback The function to invoke on the SQL operation finish.
  */
 function deleteTodoTask(data, callback) {
+    if (!dbConUsable) {
+        callback(new Error('Database unavailable.'), null);
+        return;
+    }
+
     let argChoice = 0;
     let cleanedTitle = null;
     let tempID = -1;
@@ -84,7 +123,7 @@ function deleteTodoTask(data, callback) {
     }
 
     switch (argChoice) {
-        case 1: // handle deletion by title        
+        case 1: // handle deletion by title
             databaseCon.query(`DELETE FROM tasks WHERE title = ${cleanedTitle}`, (err, result) => {
                 if (err) {
                     callback(err, null);
@@ -117,6 +156,7 @@ function closeDBConnection() {
 /// Exports of database.js:
 module.exports = {
     setupDBConnection: setupDBConnection,
+    fetchTaskBriefs: fetchTaskBriefs,
     fetchTodoTask: fetchTodoTask,
     insertTodoTask: insertTodoTask,
     deleteTodoTask: deleteTodoTask,

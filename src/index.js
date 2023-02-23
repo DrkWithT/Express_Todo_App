@@ -1,11 +1,14 @@
 /**
  * @file index.js
+ * @brief Contains the main logic of my Express application including middleware and exit listeners.
  * @author Derek Tan
  */
 
+/** CommonJS Imports */
 var express = require('express');
 const mydatabase = require('./database');
 
+/** Constants */
 const PORT = 3000;
 
 /* App Setup */
@@ -16,14 +19,20 @@ app.set('view engine', 'pug');
 
 /* Middleware */
 app.get('/', (req, res) => {
-    res.render('landing', {page_title: 'Todos', result_title:'N/A', result_text: 'N/A'});
+    mydatabase.fetchTaskBriefs((err, data) => {
+        if (data) {
+            res.render('landing', {page_title: 'Todos', tasks: data, result_title:'N/A', result_text: 'N/A'});
+        } else {
+            res.render('landing', {page_title: 'Todos', tasks: [], result_title:'Error', result_text: `${err.message}`});
+        }
+    });
 });
 
 app.post('/', (req, res) => {
     let appAction = parseInt(req.body.action) || 0;
     let todoTitle = req.body.title || 'foo';
-    let todoID = -1;
-    let todoDescription = req.body.description;
+    let todoID;
+    let todoDescription = req.body.description || 'No content';
 
     if (!isNaN(todoTitle)) {
         todoID = parseInt(todoTitle); // if a valid ID is passed instead of a title, use it for deletions only!

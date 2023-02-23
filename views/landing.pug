@@ -6,6 +6,7 @@ block stylesheets
 block links
     //- Navigation links
     a.nav-link(href="/info") Information
+    a.nav-link(href="#result-heading") Jump To Result
 
 block main_content
     main
@@ -15,17 +16,32 @@ block main_content
             form(action="/", method="post")
                 //- Action: 1 is get, 2 is add, 3 is delete!
                 label.form-label(for="action") Action
-                input#action-input(name="action" type="number" min="1" max="3")
+                input#action-input(name="action" type="number" min="1" max="3" value="1" required)
                 //- Title: subject heading of todo entry.
                 label.form-label(for="title") Title
-                input#title-input(name="title" type="text" minlength="8" maxlength="72")
+                input#title-input(name="title" type="text" minlength="8" maxlength="72" placeholder="title here" required)
                 //- Description: info about todo entry.
                 label.form-label(for="description") Description 
-                textarea#description-input(name="description" type="text" minlength="8" maxlength="104")
+                textarea#description-input(name="description" type="text" minlength="8" maxlength="104" placeholder="task summary here" required)
                 input#submitter(type="submit", value="Submit")
         section
-            h4 Query Result
-            //- For simplicity, only 1 message entry is shown at a time.
+            h4#all-tasks-heading Your Tasks
+            div#task-box
+                ul
+                    //- Dynamic list of brief task info below.
+                    if tasks
+                        if tasks.length > 0
+                            each task in tasks
+                                li= task.taskid + ': ' + task.title
+                        else
+                            li No tasks found.
+                    else
+                        li Failed to get tasks!
+        section
+            h4#result-heading Query Result
+            //- For simplicity, only 1 result is shown at a time.
             div#task-box
                 h5 #{result_title}
                 p #{result_text}
+        //- JS
+        script(src="js/form_helper.js") 

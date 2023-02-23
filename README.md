@@ -12,18 +12,20 @@ This repository contains code and other files for a to-do web application. I mad
 
 ### Usage:
  1. After downloading the repo, run `npm install` locally.
- 2. After installing all packages, run `npm start` to run the application.
- 3. Create a `.env` file to store database credentials (see the `database.js` file for specific `.env` varialbe names). Create an SQL database according to the specification in the database notes.
- 4. Run the MySQL server.
- 5. Open `localhost` at port 3000.
+ 2. After installing all packages, create the `tasks` SQL database according to the database notes. You may use XAMPP or mySQL alone as the database technology.
+ 3. Run the MySQL server. If you have XAMPP, you must use the control panel and start MySQL.
+ 4. Create a `.env` file to store database credentials (see the `database.js` file for specific `.env` variable names).
+   - Make sure that the username, password, and database host along with name match with the actual credentials on your MySQL records.
+ 5. Run `npm start`. 
+ 6. Open `localhost` at port 3000.
 
 ### Notes: (Front-End)
- - Use material design for UI appearance.
- - Use this color palette for the webpage UI:
+ - Uses material design for UI appearance.
+ - Uses this color palette for the webpage UI:
     - [Palette](https://colorpalettes.net/color-palette-3852/)
- - All pages should have a top navigation bar for other pages.
- - All pages should use semantic HTML as much as possible: no div spam.
- - Client side scripting, if any, should be used for simple form validation.
+ - All pages have a top navigation bar for other pages.
+ - All pages use semantic HTML as much as possible: no div spam.
+ - Client side scripting, if any, should be used for simple form interactivity.
 
 ### Notes: (SQL Database)
  - The database used is called `test`.
@@ -38,5 +40,5 @@ This repository contains code and other files for a to-do web application. I mad
  2. Fix CSS. (DONE)
  3. Install NodeJS mySQL module. (DONE)
  4. Finish the adding, deleting, and reading tasks functionality. (DONE)
- 5. Add a viewing page for _all_ entries!
- 6. Test client side form script with ID entry or title entry.
+ 5. Add a feature to view _all_ tasks! (DONE)
+ 6. Test client side form script with ID entry or title entry. (DONE)

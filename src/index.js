@@ -19,8 +19,8 @@ app.set('view engine', 'pug');
 
 /* Middleware */
 app.get('/', (req, res) => {
-    mydatabase.fetchTaskBriefs((err, data = null) => {
-        if (data !== null) {
+    mydatabase.fetchTaskBriefs((err, data) => {
+        if (data) {
             res.render('landing', {page_title: 'Todos', tasks: data, result_title:'N/A', result_text: 'N/A'});
         } else {
             res.render('landing', {page_title: 'Todos', tasks: [], result_title:'Error', result_text: `${err.message}`});

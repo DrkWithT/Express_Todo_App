@@ -48,7 +48,7 @@ function fetchTaskBriefs(callback) {
         if (err) {
             callback(err, null);
         } else {
-            callback(null, {results: rows});
+            callback(null, rows);
         }
     });
 }

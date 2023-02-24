@@ -3,7 +3,7 @@
 ## By: Derek Tan
 
 ### Summary:
-This repository contains code and other files for a to-do web application. I made this project to review and apply my JavaScript and SQL knowledge.
+This repository contains code and other files for a to-do web application. I made this project to review and apply my JavaScript and SQL knowledge from classes, and I may work on this from time to time.
 
 ### Required Programs:
  - `npm`: A package manager for JS projects.
@@ -42,3 +42,5 @@ This repository contains code and other files for a to-do web application. I mad
  4. Finish the adding, deleting, and reading tasks functionality. (DONE)
  5. Add a feature to view _all_ tasks! (DONE)
  6. Test client side form script with ID entry or title entry. (DONE)
+ 7. Add description updating page / feature for a task?
+ 8. Show task list as a grid of separate tiles in a future version?
